@@ -1,0 +1,14 @@
+@mixin title($color: #000, $size:16px) {
+    font-size: $size;
+    color: $color;
+    text-align: left;
+    font-weight: 300;
+    line-height: 2;
+}
+
+
+@mixin typography($size:12px, $color:#000){
+    font-size: $size;
+    color: $color;
+    font-weight: 200;
+}

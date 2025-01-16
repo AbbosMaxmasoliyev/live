@@ -1,0 +1,462 @@
+<!-- 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Generator with Cycle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #333B37, #19A964);
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      background: #176E46;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .result {
+      font-size: 2rem;
+      margin: 20px 0;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .result.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background: #19A964;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: #176E46;
+      transform: scale(1.1);
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Random Cycle Generator</h1>
+    <div class="result" id="result">Click the button to start!</div>
+    <button onclick="startCycle()">Start Cycle</button>
+  </div>
+
+  <script>
+    function startCycle() {
+      const maxIterations = Math.floor(Math.random() * 10) + 10; // Random number of iterations (10 to 30)
+      let currentIteration = 0;
+
+      const resultElement = document.getElementById("result");
+
+      const interval = setInterval(() => {
+        const randomValue = Math.floor(Math.random() * 10)%6; // Random number between 0 and 99
+        resultElement.textContent = `Iteration ${currentIteration + 1}: ${randomValue}`;
+        resultElement.classList.remove("show");
+        setTimeout(() => resultElement.classList.add("show"), 50);
+
+        currentIteration++;
+
+        if (currentIteration >= maxIterations) {
+          clearInterval(interval);
+          resultElement.textContent = `Finished! Total iterations: ${randomValue}`;
+        }
+      }, 300); // Update every 100 milliseconds
+    }
+  </script>
+</body>
+</html>  -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Shuffle Animation</title>
+    <style>
+      @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
+      @import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background: black;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #333b37, #19a964);
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .shuffle {
+        text-align: center;
+        background-color: transparent;
+        border: 4px solid #322f30;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        text-shadow: 0px 4px Black;
+        height: 45px;
+        width: 150px;
+        margin: 15px;
+        border-radius: 10px;
+      }
+
+      .shuffle:hover {
+        background-color: maroon;
+      }
+
+      /* .layout{
+  margin: 1rem auto;
+  width: 1000px;
+  height: 500px;
+  padding: 30px;
+  background: url(https://cdn.hipwallpaper.com/i/82/47/i1Iyn9.jpg);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 4px solid #322f30;
+  margin-bottom: 100px;
+} */
+
+      .card {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+        border-radius: 10px;
+        box-sizing: border-box;
+        font-family: monospace;
+        font-weight: bold;
+        height: 250px;
+        width: 170px;
+        margin: 30px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+        transform-style: preserve-3d;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+      }
+
+      /* .card.active {
+        transform: rotateX(180deg);
+      } */
+
+      .card.red {
+        color: red;
+      }
+
+      .card.black {
+        color: black;
+      }
+
+      .cash:nth-child(1) {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        animation: drop3;
+      }
+
+      @keyframes drop3 {
+        0% {
+          transform: scale(2, 2) rotateX(0deg) rotateY(0deg) rotateZ(-50deg);
+        }
+        50% {
+          transform: rotateX(0deg) rotateY(50deg) rotateZ(25deg);
+        }
+        100% {
+          transform: scale(0.98, 0.98) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        }
+      }
+
+      .grid {
+        display: grid;
+        grid-auto-flow: column;
+        justify-items: center;
+        justify-content: space-evenly;
+      }
+
+      #photo {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+      }
+
+      .card-back {
+        /* background-color: #ffffff; */
+        border: 2px solid black;
+        border-radius: 16px;
+        box-sizing: border-box;
+        height: 250px;
+        width: 170px;
+        position: absolute;
+        vertical-align: top;
+        z-index: 1;
+        transform: rotateY(180deg);
+      }
+
+      #pic2 {
+        height: 100%;
+        width: 100%;
+        border-radius: 16px;
+      }
+
+      main {
+        align-items: center;
+        display: flex;
+        font-size: 120px;
+        justify-content: center;
+        height: 100%;
+        i {
+          font-style: normal;
+        }
+      }
+
+      header {
+        left: 0;
+        padding: 2vmin 1.5vmin;
+        position: absolute;
+        background-color: red;
+        top: 0;
+        transition: all 0.75s;
+      }
+
+      footer {
+        bottom: 0;
+        padding: 2vmin 1.5vmin;
+        position: absolute;
+        right: 0;
+        transform: rotate(180deg);
+      }
+
+      .rank,
+      .suit {
+        display: block;
+        font-size: 30px;
+      }
+
+      main {
+        align-items: center;
+        display: flex;
+        font-size: 120px;
+        justify-content: center;
+        height: 100%;
+        i {
+          font-style: normal;
+        }
+      }
+
+      .suit {
+        font-size: 25px;
+        color: #000;
+      }
+
+      .rank {
+        font-size: 25px;
+        color: #000;
+      }
+
+      #pic {
+        height: 100px;
+      }
+
+      #pic2 {
+        height: 100%;
+        width: 100%;
+      }
+      .card {
+        transform: rotateY(0deg);
+      }
+      .card .card-back {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.75;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+        color: #fff;
+        font-size: 75px;
+        transition: all 3s linear;
+      }
+      .highlight .card {
+        transform: scale(2) translate(0, 100px) rotateY(180deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 2s;
+      }
+
+      .highlight .card .card-back {
+        visibility: visible;
+
+        display: flex;
+        opacity: 1;
+      }
+
+      .card {
+        transition: transform 0.75s;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="shuffle" id="shuffle" data-rg="grid-demo">
+      Shuffle Cards
+    </button>
+    <div class="layout">
+      <div class="grid" id="grid-demo">
+        <div class="rg_item">
+          <div class="card card1">
+            <img
+              id="pic"
+              src="./images/0.png"
+              style="rotate: 90deg; width: 250px; height: 170px"
+            />
+
+            <div class="card-back">5</div>
+          </div>
+        </div>
+        <div class="rg_item">
+          <div class="card card1">
+            <img
+              id="pic"
+              src="./images/0.png"
+              style="rotate: 90deg; width: 250px; height: 170px"
+            />
+
+            <div class="card-back">6</div>
+          </div>
+        </div>
+
+        <div class="rg_item">
+          <div class="card card3">
+            <img
+              id="pic"
+              src="./images/0.png"
+              style="rotate: 90deg; width: 250px; height: 170px"
+            />
+
+            <div class="card-back">4</div>
+          </div>
+        </div>
+        <div class="rg_item">
+          <div class="card card3">
+            <img
+              id="pic"
+              src="./images/0.png"
+              style="rotate: 90deg; width: 250px; height: 170px"
+            />
+
+            <div class="card-back">3</div>
+          </div>
+        </div>
+        <div class="rg_item">
+          <div class="card card3">
+            <img
+              id="pic"
+              src="./images/0.png"
+              style="rotate: 90deg; width: 250px; height: 170px"
+            />
+
+            <div class="card-back">2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/Flip.min.js"></script>
+    <script src="https://assets.codepen.io/16327/Flip.min.js"></script>
+    <script>
+      $('.shuffle').click(function () {
+        // event.preventDefault();
+        $('.card').addClass('active')
+        $('.bet').css('pointer-events', 'none')
+        $('.grid .card').css('pointer-events', 'auto')
+      })
+
+      const grid = document.querySelector('.grid')
+      const items = gsap.utils.toArray('.rg_item')
+      document
+        .querySelector('.shuffle')
+        .addEventListener('click', async function Animate() {
+          document.querySelectorAll('.rg_item').forEach(value => {
+            value.classList.remove('highlight')
+          })
+          for (let i = 10; i >= 0; i--) {
+            // Get the state
+            const state = Flip.getState(items)
+
+            // Do the actual shuffling
+            for (let i = items.length; i >= 0; i--) {
+              grid.appendChild(grid.children[(Math.random() * i) | 0])
+            }
+
+            // Animate the change
+            await Flip.from(state, {
+              absolute: true,
+              delay: 0.1,
+              duration: 0.3
+            })
+          }
+
+          let array = []
+          document.querySelectorAll('.rg_item').forEach(value => {
+            array.push(value.offsetLeft)
+          })
+          // O'rtadagi qiymatni olish
+          const middleIndex = Math.floor(array.length / 2)
+          const middleValue = array[middleIndex]
+          document.querySelectorAll('.rg_item').forEach(value => {
+            if (value.offsetLeft == middleValue) {
+              value.classList.add('highlight')
+            }
+          })
+        })
+    </script>
+  </body>
+</html>
